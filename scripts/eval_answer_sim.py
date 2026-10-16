@@ -138,6 +138,7 @@ def run_case(store: CodingMemoryStore, task: dict, cond: str, args) -> dict:
     ans = llm.chat_json(args.answer_model, ANSWER_SYS,
                         f"Task:\n{task['ps'][:3000]}\n\nMemories:\n{mem_text}",
                         max_tokens=2500, timeout=120.0, retries=1)
+    ans = ans if isinstance(ans, dict) else {}  # 模型偶尔回数组,统一按 dict 处理
     pred_files = [norm(f) for f in (ans or {}).get("files", []) if isinstance(f, str)]
     gold_files = {norm(f) for f in gold_files_of(task["patch"])}
     inter = set(pred_files) & gold_files
@@ -145,18 +146,19 @@ def run_case(store: CodingMemoryStore, task: dict, cond: str, args) -> dict:
     soft = llm.chat_json(
         args.soft_model, SOFT_SYS,
         f"Task:\n{task['ps'][:2000]}\n\nReference fix patch:\n{task['patch'][:4000]}"
-        f"\n\nProposed solution:\n{json.dumps(ans or {}, ensure_ascii=False)[:4000]}",
+        f"\n\nProposed solution:\n{json.dumps(ans, ensure_ascii=False)[:4000]}",
         max_tokens=400, timeout=60.0, retries=1,
     )
+    soft = soft if isinstance(soft, dict) else {}
     return {
         "rid": task["rid"], "repo": task["repo"], "qtype": task["qtype"], "cond": cond,
         "localized": bool(inter), "jaccard": round(len(inter) / len(union), 4) if union else 0.0,
         "pred_files": pred_files, "gold_files": sorted(gold_files),
-        "soft_score": (soft or {}).get("score"),
-        "captures_fix": (soft or {}).get("captures_fix"),
+        "soft_score": soft.get("score"),
+        "captures_fix": soft.get("captures_fix"),
         "n_mem": len(items), "n_card": sum(1 for it in items if it.get("kind") == "card"),
         "has_profile": any(it.get("kind") == "profile" for it in items),
-        "mem_chars": len(mem_text), "answer_ok": ans is not None,
+        "mem_chars": len(mem_text), "answer_ok": bool(ans),
     }
 
 
