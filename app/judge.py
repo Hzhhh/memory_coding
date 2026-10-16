@@ -21,6 +21,7 @@ SNIPPET = int(os.environ.get("JUDGE_SNIPPET", "500"))     # 候选展示截断
 TARGET_BUG = int(os.environ.get("JUDGE_TARGET_BUG", "40"))
 TARGET_FEATURE = int(os.environ.get("JUDGE_TARGET_FEATURE", "75"))
 TARGET_OTHER = int(os.environ.get("JUDGE_TARGET_OTHER", "60"))
+MIN_RETURN = int(os.environ.get("PACK_MIN_RETURN", "8"))  # 饥荒地板:防止过度过滤饿死 answer
 TOKEN_BUDGET = int(os.environ.get("PACK_TOKEN_BUDGET", "55000"))
 MAX_EXCERPTS = int(os.environ.get("PACK_MAX_EXCERPTS", "10"))
 EXCERPT_CHARS = int(os.environ.get("PACK_EXCERPT_CHARS", "900"))
@@ -165,6 +166,21 @@ def _pack(query: str, options: list[str], items: list[dict],
         if len(picked) >= target:
             break
         take(it)
+
+    # 4b) 饥荒地板:候选太少时判别器再严格也不能饿死 answer——
+    # 按"未判别/C 优先,I 殿后"回填到 MIN_RETURN(稀疏 relevant 域保护;
+    # 噪声域通常已有足量 A/C,不会触发 I 回填)
+    floor = min(MIN_RETURN, len(items))
+    if len(picked) < floor:
+        for n, it in enumerate(head):
+            if len(picked) >= floor:
+                break
+            if cls.get(n) in (None, "C"):
+                take(it)
+        for n, it in enumerate(head):
+            if len(picked) >= floor:
+                break
+            take(it)
 
     # 5) token 预算裁剪(按序保留前缀——与平台截断规则同构)
     out: list[dict] = []
