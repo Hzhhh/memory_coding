@@ -1,18 +1,0 @@
-[config] DISTILL=True JUDGE=True answer=openai/gpt-4o tasks=4 db=results/smoke_v1.db
-Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2277.41it/s]
-[1/8] django__django-28862 relevant localized=False soft=4 n=6
-[2/8] matplotlib__matplotlib-18294 relevant localized=True soft=4 n=6
-[3/8] sympy__sympy-26642 relevant localized=True soft=8 n=6
-[4/8] matplotlib__matplotlib-18294 noisy localized=True soft=7 n=3
-[5/8] django__django-28862 noisy localized=False soft=4 n=6
-[6/8] django__django-18166 relevant localized=True soft=9 n=1
-[7/8] sympy__sympy-26642 noisy localized=True soft=5 n=7
-[8/8] django__django-18166 noisy localized=True soft=10 n=3
-
-===== summary =====
-bug      relevant n=  3 localized=0.667 soft=5.3 cap_fix=0.333
-bug      noisy    n=  3 localized=0.667 soft=5.3 cap_fix=0.333
-feature  relevant n=  1 localized=1.000 soft=9.0 cap_fix=1.000
-feature  noisy    n=  1 localized=1.000 soft=10.0 cap_fix=1.000
-ALL      relevant n=  4 localized=0.750 soft=6.2 cap_fix=0.500
-ALL      noisy    n=  4 localized=0.750 soft=6.5 cap_fix=0.500
