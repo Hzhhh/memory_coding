@@ -1,0 +1,13 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+experience=300 related=99 usable_links=102
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 3213.11it/s]
+
+queries=102  add_time=102.2s  search_time=8.6s  avg_search=84ms
+HitRate@100: 0.9608 (98/102)
+Recall@  5: 0.7353
+Recall@ 10: 0.7941
+Recall@ 25: 0.8922
+Recall@ 50: 0.9412
+Recall@100: 0.9608
+MRR: 0.6832
+rerank_stats: {"calls": 0, "ok": 0, "empty": 0, "fallback": 0, "prompt_tokens": 0, "completion_tokens": 0}

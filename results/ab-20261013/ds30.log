@@ -1,0 +1,28 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+experience=300 related=99 usable_links=30
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 4528.06it/s]
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+[rerank] unavailable, falling back to RRF order: hard timeout 40.0s (streaming response)
+
+queries=30  add_time=75.0s  search_time=1753.0s  avg_search=58435ms
+HitRate@100: 0.9667 (29/30)
+Recall@  5: 0.7333
+Recall@ 10: 0.7667
+Recall@ 25: 0.8000
+Recall@ 50: 0.9333
+Recall@100: 0.9667
+MRR: 0.6927
+rerank_stats: {"calls": 30, "ok": 14, "empty": 1, "fallback": 15, "prompt_tokens": 59116, "completion_tokens": 24878}

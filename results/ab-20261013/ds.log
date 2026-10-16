@@ -1,0 +1,3 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+experience=300 related=99 usable_links=102
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 199/199 [00:00<00:00, 4615.19it/s]
