@@ -15,6 +15,7 @@ import os
 from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 
+from . import judge
 from .store import CodingMemoryStore
 
 API_TOKEN = os.environ.get("AML_API_TOKEN", "")  # 空=不鉴权(本地调试),上报必须设置
@@ -80,8 +81,21 @@ def add(req: AddRequest) -> AddResponse:
 
 @app.post("/search", response_model=SearchResponse, dependencies=[Depends(verify_token)])
 def search(req: SearchRequest) -> SearchResponse:
-    items = store.search(req.user_id, req.query, top_k=req.top_k)
-    return SearchResponse(data=[MemoryItem(**i) for i in items])
+    items = store.search_recall(req.user_id, req.query, top_k=req.top_k)
+    # v1:判别 + 题型条件化打包(ENABLED=0 时行为与 v0.4 完全一致)
+    if judge.ENABLED:
+        items = judge.judge_and_pack(
+            req.query,
+            req.options,
+            items,
+            fetch_excerpts=lambda it: store.fetch_excerpts(req.user_id, it),
+        )
+    data = [
+        MemoryItem(id=it["id"], content=it["content"],
+                   score=it.get("score"), created_at=it.get("created_at"))
+        for it in items
+    ]
+    return SearchResponse(data=data)
 
 
 @app.get("/health")
